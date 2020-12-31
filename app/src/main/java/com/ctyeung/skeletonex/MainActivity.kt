@@ -1,9 +1,11 @@
 package com.ctyeung.skeletonex
 
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,11 +34,22 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
+    /*
+     * Gonzales Thinning invoked once
      */
-    external fun stringFromJNI(): String
+    fun thinOnce(bmpIn:Bitmap, bmpOut:Bitmap) {
+        try {
+            imageThinOnceFromJNI(bmpIn, bmpOut)
+        }
+        catch (ex:java.lang.Exception) {
+            Toast.makeText(this,
+                ex.toString() as String,
+                Toast.LENGTH_LONG).show()
+        }
+    }
+
+    external fun imageThinOnceFromJNI(bmpIn: Bitmap?,
+                                      bmpOut: Bitmap?)
 
     companion object {
         // Used to load the 'native-lib' library on application startup.

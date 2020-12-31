@@ -5,3 +5,7 @@
 0	107	1609427881	CMakeFiles/native-lib.dir/GonzalesThinning.cpp.o	91c5e74f1fcaec4a
 1	672	1609427881	CMakeFiles/native-lib.dir/native-lib.cpp.o	7b3e8d817a134592
 673	801	1609427881	/Users/ctyeung/Documents/GitHub/Android/SkeletonEx/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	527c36dd28b7717e
+0	9	0	clean	e5725e59067cfa2f
+2	77	1609456423	CMakeFiles/native-lib.dir/GonzalesThinning.cpp.o	91c5e74f1fcaec4a
+3	590	1609456423	CMakeFiles/native-lib.dir/native-lib.cpp.o	7b3e8d817a134592
+590	710	1609456423	/Users/ctyeung/Documents/GitHub/Android/SkeletonEx/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	527c36dd28b7717e
