@@ -11,3 +11,6 @@ They related tasks are common for the processing of sign-signature, raster<->vec
 
 2. Skeletonization by Kálmán Palágyi, Ph.D.\
 http://www.inf.u-szeged.hu/~palagyi/skel/skel.html
+
+3. Skeleton exercises by C.T. Yeung\
+http://www.ctyeung.com/wordpress/?p=280
