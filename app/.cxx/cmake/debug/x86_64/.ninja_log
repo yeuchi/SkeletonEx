@@ -1,0 +1,7 @@
+# ninja log v5
+1	36	1609427872	build.ninja	38a7a0e4d87b30b7
+0	6	0	clean	e5725e59067cfa2f
+0	33	1609427882	build.ninja	38a7a0e4d87b30b7
+0	65	1609427882	CMakeFiles/native-lib.dir/GonzalesThinning.cpp.o	c17dd389eca9b97b
+0	615	1609427883	CMakeFiles/native-lib.dir/native-lib.cpp.o	87e5a53b8f0edd57
+616	696	1609427883	/Users/ctyeung/Documents/GitHub/Android/SkeletonEx/app/build/intermediates/cmake/debug/obj/x86_64/libnative-lib.so	5c1ec4bb4a0cd975

@@ -1,0 +1,7 @@
+# ninja log v5
+4	54	1609427872	build.ninja	3970c11cd0d37fcf
+0	7	0	clean	e5725e59067cfa2f
+0	45	1609427879	build.ninja	3970c11cd0d37fcf
+0	252	1609427880	CMakeFiles/native-lib.dir/GonzalesThinning.cpp.o	c3c814fe95c31ae9
+1	1028	1609427880	CMakeFiles/native-lib.dir/native-lib.cpp.o	4dcefcc3197a5301
+1029	1156	1609427881	/Users/ctyeung/Documents/GitHub/Android/SkeletonEx/app/build/intermediates/cmake/debug/obj/armeabi-v7a/libnative-lib.so	bd4a8c0d5a940340

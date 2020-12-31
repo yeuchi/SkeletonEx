@@ -1,0 +1,8 @@
+ninja: Entering directory `/Users/ctyeung/Documents/GitHub/Android/SkeletonEx/app/.cxx/cmake/debug/arm64-v8a'
+[0/1] Re-running CMake...
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/ctyeung/Documents/GitHub/Android/SkeletonEx/app/.cxx/cmake/debug/arm64-v8a
+[1/3] Building CXX object CMakeFiles/native-lib.dir/GonzalesThinning.cpp.o
+[2/3] Building CXX object CMakeFiles/native-lib.dir/native-lib.cpp.o
+[3/3] Linking CXX shared library /Users/ctyeung/Documents/GitHub/Android/SkeletonEx/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so
