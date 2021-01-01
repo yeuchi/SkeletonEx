@@ -21,6 +21,11 @@
       "artifactName": "native-lib",
       "files": [
         {
+          "src": "/Users/ctyeung/Documents/GitHub/Android/SkeletonEx/app/src/main/cpp/GonzalesThinning.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
           "src": "/Users/ctyeung/Documents/GitHub/Android/SkeletonEx/app/src/main/cpp/native-lib.cpp",
           "flagsOrdinal": 1,
           "workingDirectoryOrdinal": 0

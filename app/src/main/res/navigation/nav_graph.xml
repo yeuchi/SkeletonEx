@@ -24,12 +24,20 @@
         android:id="@+id/thinFragment"
         android:name="com.ctyeung.skeletonex.ThinFragment"
         android:label="fragment_thin"
-        tools:layout="@layout/fragment_thin" />
+        tools:layout="@layout/fragment_thin" >
+        <action
+            android:id="@+id/action_thinFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/distanceMapFragment"
         android:name="com.ctyeung.skeletonex.DistanceMapFragment"
         android:label="fragment_distance_map"
-        tools:layout="@layout/fragment_distance_map" />
+        tools:layout="@layout/fragment_distance_map" >
+        <action
+            android:id="@+id/action_distanceMapFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/photoFragment"
         android:name="com.ctyeung.skeletonex.photoFragment"

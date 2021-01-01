@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
+import com.ctyeung.skeletonex.databinding.FragmentThinBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,10 +19,11 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ThinFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ThinFragment : Fragment() {
+class ThinFragment : BaseFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var binding:FragmentThinBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +37,20 @@ class ThinFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_thin, container, false)
+        super.onCreateView(inflater, container, savedInstanceState)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_thin, container, false)
+        binding.layout = this;
+        return binding!!.root;
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).setTittle("Thinning")
+    }
+
+    override fun onBackPressed(): Boolean {
+        binding!!.root.findNavController().navigate(R.id.action_thinFragment_to_mainFragment)
+        return true
     }
 
     companion object {
