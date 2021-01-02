@@ -1,11 +1,14 @@
 package com.ctyeung.skeletonex
 
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.ctyeung.skeletonex.databinding.FragmentThinBinding
 
@@ -51,6 +54,30 @@ class ThinFragment : BaseFragment() {
     override fun onBackPressed(): Boolean {
         binding!!.root.findNavController().navigate(R.id.action_thinFragment_to_mainFragment)
         return true
+    }
+    var bmpSrc:Bitmap? = null
+
+    fun onClickThinOnce() {
+
+        if(bmpSrc == null) {
+            val v:View = binding.blobView as View
+            bmpSrc = Bitmap.createBitmap(v.layoutParams.width, v.layoutParams.height, Bitmap.Config.ARGB_8888)
+            val c = Canvas(bmpSrc!!)
+            v.layout(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
+            v.draw(c);
+        }
+
+        bmpSrc.let {
+
+            var bmpResult:Bitmap = bmpSrc!!.copy(bmpSrc!!.config, true)
+            (this.activity as MainActivity).thinOnce(bmpSrc!!, bmpResult);
+
+            // copy bmpResult into bmpSrc
+        }
+    }
+
+    fun onClickClear() {
+
     }
 
     companion object {

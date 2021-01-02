@@ -10,16 +10,33 @@
             type="com.ctyeung.skeletonex.ThinFragment" />
     </data>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
         tools:context=".ThinFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+        <com.ctyeung.skeletonex.MyBlobView
+            android:layout_width="400dp"
+            android:layout_height="300dp"
+            android:id="@+id/blobView"/>
 
-    </FrameLayout>
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Thin Once"
+            android:layout_margin="10dp"
+            android:id="@+id/btnThinOnce"
+            android:onClick="@{()->layout.onClickThinOnce()}"/>
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            android:layout_margin="10dp"
+            android:id="@+id/btnClear"
+            android:onClick="@{()->layout.onClickClear()}"/>
+
+    </LinearLayout>
 </layout>
