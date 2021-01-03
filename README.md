@@ -17,3 +17,7 @@ http://www.inf.u-szeged.hu/~palagyi/skel/skel.html
 
 3. Skeleton exercises by C.T. Yeung\
 http://www.ctyeung.com/wordpress/?p=280
+
+4. Thinning exercises in javascript by C.T. Yeung\
+https://github.com/yeuchi/Thinning/blob/master/web/view/gonzalezThin.js \
+http://www.ctyeung.com/wordpress/?p=479
