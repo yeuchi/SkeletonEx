@@ -17,10 +17,22 @@
         android:gravity="center"
         tools:context=".ThinFragment">
 
-        <com.ctyeung.skeletonex.MyBlobView
+        <RelativeLayout
+            android:id="@+id/line_container"
             android:layout_width="400dp"
-            android:layout_height="300dp"
-            android:id="@+id/blobView"/>
+            android:layout_height="300dp">
+
+            <com.ctyeung.skeletonex.MyImageView
+                android:layout_width="400dp"
+                android:layout_height="300dp"
+                android:id="@+id/bmpView"/>
+
+            <com.ctyeung.skeletonex.MyBlobView
+                android:layout_width="400dp"
+                android:layout_height="300dp"
+                android:id="@+id/blobView"/>
+
+        </RelativeLayout>
 
         <Button
             android:layout_width="200dp"

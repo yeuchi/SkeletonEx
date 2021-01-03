@@ -3,6 +3,7 @@ package com.ctyeung.skeletonex
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -60,24 +61,32 @@ class ThinFragment : BaseFragment() {
     fun onClickThinOnce() {
 
         if(bmpSrc == null) {
-            val v:View = binding.blobView as View
+            val v: View = binding.blobView as View
             bmpSrc = Bitmap.createBitmap(v.layoutParams.width, v.layoutParams.height, Bitmap.Config.ARGB_8888)
-            val c = Canvas(bmpSrc!!)
+            var c = Canvas(bmpSrc!!)
             v.layout(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
             v.draw(c);
+
+            binding.bmpView.setImageBitmap(bmpSrc)
+            binding.blobView.clear()
         }
 
-        bmpSrc.let {
-
-            var bmpResult:Bitmap = bmpSrc!!.copy(bmpSrc!!.config, true)
+        bmpSrc?.let {
+            var bmpResult:Bitmap = Bitmap.createBitmap(bmpSrc!!)
             (this.activity as MainActivity).thinOnce(bmpSrc!!, bmpResult);
 
             // copy bmpResult into bmpSrc
+            binding.bmpView.setImageBitmap(bmpResult)
+            bmpSrc = bmpResult.copy(bmpResult.config, true)
+            binding.blobView.visibility = View.GONE
         }
     }
 
     fun onClickClear() {
-
+        binding.blobView.visibility = View.VISIBLE
+        binding.blobView.clear()
+        binding.bmpView.setImageBitmap(null)
+        bmpSrc = null
     }
 
     companion object {
