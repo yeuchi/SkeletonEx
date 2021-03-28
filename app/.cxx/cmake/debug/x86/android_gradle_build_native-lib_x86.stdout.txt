@@ -1,2 +1,10 @@
 ninja: Entering directory `/Users/ctyeung/Documents/GitHub/Android/SkeletonEx/app/.cxx/cmake/debug/x86'
-ninja: no work to do.
+[1/2] Building CXX object CMakeFiles/native-lib.dir/GonzalesThinning.cpp.o
+/Users/ctyeung/Documents/GitHub/Android/SkeletonEx/app/src/main/cpp/GonzalesThinning.cpp:116:17: warning: array index 9 is past the end of the array (which contains 8 elements) [-Warray-bounds]
+                listNeighbors[9] = aboveline[x - 1].green;
+                ^             ~
+/Users/ctyeung/Documents/GitHub/Android/SkeletonEx/app/src/main/cpp/GonzalesThinning.h:64:5: note: array 'listNeighbors' declared here
+    int listNeighbors[LIST_LEN];
+    ^
+1 warning generated.
+[2/2] Linking CXX shared library /Users/ctyeung/Documents/GitHub/Android/SkeletonEx/app/build/intermediates/cmake/debug/obj/x86/libnative-lib.so

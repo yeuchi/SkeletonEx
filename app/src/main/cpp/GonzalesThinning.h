@@ -60,11 +60,6 @@ protected:
     static const int LIST_LEN = 8;
     static const int BACKGROUND_COLOR = 255;
 
-    static const int P2 = 0;
-    static const int P4 = 2;
-    static const int P6 = 4;
-    static const int P8 = 6;
-
     bool bDeleted = true;
     int listNeighbors[LIST_LEN];
 };

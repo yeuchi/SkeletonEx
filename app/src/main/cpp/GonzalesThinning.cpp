@@ -29,12 +29,10 @@
 //////////////////////////////////////////////////////////////////
 // Construct / Destruct
 
-GonzalesThinning::GonzalesThinning()
-{
+GonzalesThinning::GonzalesThinning() {
 }
 
-GonzalesThinning::~GonzalesThinning()
-{
+GonzalesThinning::~GonzalesThinning() {
 
 }
 
@@ -47,12 +45,11 @@ GonzalesThinning::~GonzalesThinning()
  * [out] return a binary skeleton image
  */
 bool GonzalesThinning::Iterate(AndroidBitmapInfo infoSource,
-                             void* pixelsSource,
-                             AndroidBitmapInfo infoResult,
-                             void* pixelsResult)
-{
+                               void *pixelsSource,
+                               AndroidBitmapInfo infoResult,
+                               void *pixelsResult) {
     bDeleted = true;
-    while(bDeleted) {
+    while (bDeleted) {
         bDeleted = Apply(infoSource, pixelsSource,
                          infoResult, pixelsResult);
     }
@@ -67,16 +64,15 @@ bool GonzalesThinning::Iterate(AndroidBitmapInfo infoSource,
  *
  */
 bool GonzalesThinning::Apply(AndroidBitmapInfo infoSource,
-                             void* pixelsSource,
+                             void *pixelsSource,
                              AndroidBitmapInfo infoResult,
-                             void* pixelsResult)
-{
+                             void *pixelsResult) {
     bool deleted = false;
-    if(thinning(infoSource, pixelsSource, infoResult, pixelsResult, STEP1)) {
+    if (thinning(infoSource, pixelsSource, infoResult, pixelsResult, STEP1)) {
         deleteBorder();
         deleted = true;
     }
-    if(thinning(infoSource, pixelsSource, infoResult, pixelsResult, STEP2)) {
+    if (thinning(infoSource, pixelsSource, infoResult, pixelsResult, STEP2)) {
         deleteBorder();
         deleted = true;
     }
@@ -87,49 +83,51 @@ bool GonzalesThinning::Apply(AndroidBitmapInfo infoSource,
 // Protected methods
 
 bool GonzalesThinning::thinning(AndroidBitmapInfo infoSource,
-                                void* pixelsSource,
+                                void *pixelsSource,
                                 AndroidBitmapInfo infoResult,
-                                void* pixelsResult,
-                                int step)
-{
-    void* currentPixelsSource;
+                                void *pixelsResult,
+                                int step) {
+    void *currentPixelsSource;
     bool bDelete = false;
 
-    for (int y=1;y<infoSource.height-1;y++)
-    {
-        currentPixelsSource = (char *)pixelsSource + (infoSource.stride * y);
-        rgba * srcline = (rgba *) currentPixelsSource;
-        rgba * destline = (rgba *) pixelsResult;
+    for (int y = 1; y < infoSource.height - 1; y++) {
+        currentPixelsSource = (char *) pixelsSource + (infoSource.stride * y);
+        rgba *srcline = (rgba *) currentPixelsSource;
+        rgba *destline = (rgba *) pixelsResult;
 
-        for (int x=1;x<infoSource.width-1;x++) {
+        for (int x = 1; x < infoSource.width - 1; x++) {
 
-            // if pixel is a blog
-            if(srcline[x].green == BACKGROUND_COLOR) {
-
+            // if pixel is green
+            if (srcline[x].green == 255 && srcline[x].blue == 0 && srcline[x].red == 0) {
+                /*
+                 *  p9 | p2 | 93
+                 *  p8 | p1 | p4
+                 *  p7 | p6 | p5
+                 *  subtract 1 for zeroth order array
+                 */
                 // get neighbors
-                listNeighbors[2] = srcline[x+1].green;
-                listNeighbors[6] = srcline[x-1].green;
+                listNeighbors[7] = srcline[x - 1].green;
+                listNeighbors[4] = srcline[x + 1].green;
 
-                void* nearPixelsSource = (char *)pixelsSource + (infoSource.stride * y-1);
-                rgba* nearline = (rgba *) nearPixelsSource;
-                listNeighbors[0] = srcline[x].green;
-                listNeighbors[1] = nearline[x+1].green;
-                listNeighbors[7] = nearline[x-1].green;
+                void *abovePixelsSource = (char *) pixelsSource + (infoSource.stride * y - 1);
+                rgba *aboveline = (rgba *) abovePixelsSource;
+                listNeighbors[1] = aboveline[x].green;
+                listNeighbors[2] = aboveline[x + 1].green;
+                listNeighbors[9] = aboveline[x - 1].green;
 
-                nearPixelsSource = (char *)pixelsSource + (infoSource.stride * y+1);
-                nearline = (rgba *) nearPixelsSource;
-                listNeighbors[3] = srcline[x+1].green;
-                listNeighbors[4] = srcline[x].green;
-                listNeighbors[5] = srcline[x-1].green;
+                void *belowPixelsSource = (char *) pixelsSource + (infoSource.stride * y + 1);
+                rgba *belowline = (rgba *) belowPixelsSource;
+                listNeighbors[4] = belowline[x + 1].green;
+                listNeighbors[5] = belowline[x].green;
+                listNeighbors[6] = belowline[x - 1].green;
 
-                if(correctCount()) {
-                    if(transition()) {
-                        if(takeStep(step)) {
+                if (correctCount()) {
+                    if (transition()) {
+                        if (takeStep(step)) {
                             // white out pixel
-                            destline[x].alpha = 255;
                             destline[x].red = 255;      // red
-                            destline[x].green = 255;    // green
-                            destline[x].blue = 255;     // blue
+                            destline[x].green = 0;    // green
+                            destline[x].blue = 0;     // blue
                             bDelete = true;
                         }
                     }
@@ -141,14 +139,20 @@ bool GonzalesThinning::thinning(AndroidBitmapInfo infoSource,
     return bDelete;
 }
 
-void GonzalesThinning::deleteBorder()
-{
-    // not used for now
+void GonzalesThinning::deleteBorder() {
+    /*
+     *  delete border pixels here -- after prior identification
+     */
 }
 
-bool GonzalesThinning::takeStep(int step)
-{
-    switch(step) {
+bool GonzalesThinning::takeStep(int step) {
+
+    /*
+     * 1) identify / mark left border pixels in step 1 - write to mask
+     * 2) identify / mark right border pixels in step 2 for remaining pixels
+     * 3) delete selected pixels from above.
+     */
+    switch (step) {
         case STEP1:
             return step1CD();
 
@@ -161,49 +165,42 @@ bool GonzalesThinning::takeStep(int step)
 /*
  * pg 492 criterior (a)
  * [out] meets 2<=N(p1)<=6 criterior
+ *
+ * - a contour point is value = 1 and neighbor of at least 1 zero.
  */
-bool GonzalesThinning::correctCount()
-{
+bool GonzalesThinning::correctCount() {
     int total = 0;
-    for(int i=0; i<LIST_LEN; i++){
-        if(listNeighbors[i]==BACKGROUND_COLOR)
-            total ++;
+    for (int i = 0; i < LIST_LEN; i++) {
+        if (listNeighbors[i] == BACKGROUND_COLOR)
+            total++;
     }
-    return(2<=total&&total<=6)?true:false;
+    return (2 <= total && total <= 6) ? true : false;
 }
 
 /*
  * pg 492 criterior (b)
  * [out] meets S(p1)==1 criterior
+ * only 1 count allowed for 1 -> 0 transition (center is 1)
  */
-bool GonzalesThinning::transition()
-{
+bool GonzalesThinning::transition() {
     int total = 0;
-    for(int i=0; i<LIST_LEN; i++){
-        if(listNeighbors[i]!=BACKGROUND_COLOR)
-            if(listNeighbors[i+1]==BACKGROUND_COLOR)
-                total ++;
-    }
-    if(listNeighbors[LIST_LEN-1]!=BACKGROUND_COLOR)
-        if(listNeighbors[0]==BACKGROUND_COLOR)
+    for(int i = 1; i<8; i++) {
+        if (listNeighbors[i] == 0)
             total ++;
-
-    return (total==1)?true:false;
+    }
+    return (total == 1);
 }
 
 /*
  * pg 492 criterior (c, d) step 1
  */
-bool GonzalesThinning::step1CD()
-{
-    if(listNeighbors[P4]!=BACKGROUND_COLOR)
+bool GonzalesThinning::step1CD() {
+    if (listNeighbors[3] == 0 ||
+        listNeighbors[5] == 0)
         return true;
 
-    if(listNeighbors[P6]!=BACKGROUND_COLOR)
-        return true;
-
-    if(listNeighbors[P2]!=BACKGROUND_COLOR&&
-       listNeighbors[P8]!=BACKGROUND_COLOR)
+    else if (listNeighbors[1] == 0 &&
+             listNeighbors[7] == 0)
         return true;
 
     return false;
@@ -212,16 +209,13 @@ bool GonzalesThinning::step1CD()
 /*
  * pg 492 criterior (c, d) step 2
  */
-bool GonzalesThinning::step2CD()
-{
-    if(listNeighbors[P2]!=BACKGROUND_COLOR)
+bool GonzalesThinning::step2CD() {
+    if (listNeighbors[1] == 0 ||
+        listNeighbors[7] == 0)
         return true;
 
-    if(listNeighbors[P8]!=BACKGROUND_COLOR)
-        return true;
-
-    if(listNeighbors[P6]!=BACKGROUND_COLOR&&
-       listNeighbors[P4]!=BACKGROUND_COLOR)
+    else if (listNeighbors[3] == 0 &&
+             listNeighbors[5] == 0)
         return true;
 
     return false;

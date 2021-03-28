@@ -118,8 +118,8 @@ void ThinOnce(JNIEnv *env,
 
 extern "C" JNIEXPORT void JNICALL
 Java_com_ctyeung_skeletonex_MainActivity_imageThinOnceFromJNI(JNIEnv * env,
-                                                             jobject obj,
-                                                             jobject bmp_in,
-                                                             jobject bmp_out) {
+                                 jobject obj,
+                                 jobject bmp_in,
+                                 jobject bmp_out) {
     ThinOnce(env, obj, bmp_in, bmp_out);
 }

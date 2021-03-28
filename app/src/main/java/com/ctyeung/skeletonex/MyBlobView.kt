@@ -86,14 +86,14 @@ open class MyBlobView : View {
         paint.isAntiAlias = true
         paint.strokeWidth = 3f
         paint.style = Paint.Style.FILL
-        paint.color = Color.BLACK
+        paint.color = Color.GREEN
         canvas?.drawPath(path, paint)
     }
 
     private fun drawLine(p1: PointF,
                          p2: PointF,
                          canvas: Canvas,
-                         color:Int? = Color.BLUE) {
+                         color:Int? = Color.GREEN) {
         val paint = Paint()
         paint.isAntiAlias = true
         paint.strokeWidth = 3f
@@ -107,7 +107,7 @@ open class MyBlobView : View {
     private fun drawPoint(p: PointF, canvas: Canvas) {
         val paint = Paint()
         paint.style = Paint.Style.FILL
-        paint.color = Color.BLACK
+        paint.color = Color.GREEN
         canvas?.drawCircle(p.x, p.y, 5F, paint);
     }
 }
