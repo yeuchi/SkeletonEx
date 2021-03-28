@@ -22,3 +22,6 @@ http://www.ctyeung.com/wordpress/?p=280
 4. Thinning exercises in javascript by C.T. Yeung\
 https://github.com/yeuchi/Thinning/blob/master/web/view/gonzalezThin.js \
 http://www.ctyeung.com/wordpress/?p=479
+
+5. A Thinning Algorithm by Ruye Wang 2011-11-09
+http://fourier.eng.hmc.edu/e161/lectures/morphology/node2.html
