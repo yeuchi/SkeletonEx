@@ -67,16 +67,17 @@ bool GonzalesThinning::Apply(AndroidBitmapInfo infoSource,
                              void *pixelsSource,
                              AndroidBitmapInfo infoResult,
                              void *pixelsResult) {
-    bool deleted = false;
+    bool marked = false;
     if (thinning(infoSource, pixelsSource, infoResult, pixelsResult, STEP1)) {
-        deleteBorder();
-        deleted = true;
+        marked = true;
     }
     if (thinning(infoSource, pixelsSource, infoResult, pixelsResult, STEP2)) {
-        deleteBorder();
-        deleted = true;
+        marked = true;
     }
-    return deleted;
+//    if(marked)
+//        deleteBorder(infoSource, pixelsSource, infoResult, pixelsResult);
+
+    return marked;
 }
 
 //////////////////////////////////////////////////////////////////
@@ -88,35 +89,40 @@ bool GonzalesThinning::thinning(AndroidBitmapInfo infoSource,
                                 void *pixelsResult,
                                 int step) {
     void *currentPixelsSource;
+    void *abovePixelsSource;
+    void *belowPixelsSource;
+
     bool bDelete = false;
 
-    for (int y = 1; y < infoSource.height - 1; y++) {
+    for (int y = 1; y < infoSource.height - 2; y++) {
         currentPixelsSource = (char *) pixelsSource + (infoSource.stride * y);
+        abovePixelsSource = (char *) pixelsSource + (infoSource.stride * (y-1));
+        belowPixelsSource = (char *) pixelsSource + (infoSource.stride * (y+1));
+
         rgba *srcline = (rgba *) currentPixelsSource;
         rgba *destline = (rgba *) pixelsResult;
 
-        for (int x = 1; x < infoSource.width - 1; x++) {
+        rgba *aboveline = (rgba *) abovePixelsSource;
+        rgba *belowline = (rgba *) belowPixelsSource;
+
+        for (int x = 1; x < infoSource.width - 2; x++) {
 
             // if pixel is green
             if (srcline[x].green == 255 && srcline[x].blue == 0 && srcline[x].red == 0) {
                 /*
-                 *  p9 | p2 | 93
+                 *  p9 | p2 | p3
                  *  p8 | p1 | p4
                  *  p7 | p6 | p5
                  *  subtract 1 for zeroth order array
                  */
                 // get neighbors
-                listNeighbors[7] = srcline[x - 1].green;
-                listNeighbors[4] = srcline[x + 1].green;
+                listNeighbors[7] = srcline[x-1].green;
+                listNeighbors[3] = srcline[x+1].green;
 
-                void *abovePixelsSource = (char *) pixelsSource + (infoSource.stride * y - 1);
-                rgba *aboveline = (rgba *) abovePixelsSource;
                 listNeighbors[1] = aboveline[x].green;
-                listNeighbors[2] = aboveline[x + 1].green;
-                listNeighbors[9] = aboveline[x - 1].green;
+                listNeighbors[2] = aboveline[x+1].green;
+                listNeighbors[8] = aboveline[x-1].green;
 
-                void *belowPixelsSource = (char *) pixelsSource + (infoSource.stride * y + 1);
-                rgba *belowline = (rgba *) belowPixelsSource;
                 listNeighbors[4] = belowline[x + 1].green;
                 listNeighbors[5] = belowline[x].green;
                 listNeighbors[6] = belowline[x - 1].green;
@@ -139,10 +145,16 @@ bool GonzalesThinning::thinning(AndroidBitmapInfo infoSource,
     return bDelete;
 }
 
-void GonzalesThinning::deleteBorder() {
-    /*
-     *  delete border pixels here -- after prior identification
-     */
+/*
+ *  delete border pixels here -- after prior identification
+ */
+void GonzalesThinning::deleteBorder(AndroidBitmapInfo infoSource,
+                                    void *pixelsSource,
+                                    AndroidBitmapInfo infoResult,
+                                    void *pixelsResult) {
+    void *currentPixelsSource;
+    bool bDelete = false;
+
 }
 
 bool GonzalesThinning::takeStep(int step) {

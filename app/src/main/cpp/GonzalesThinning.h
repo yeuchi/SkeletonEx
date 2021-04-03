@@ -47,7 +47,10 @@ protected:
                   void* pixelsSource,
                   AndroidBitmapInfo infoResult,
                   void* pixelsResult, int step);
-    void deleteBorder();
+    void deleteBorder(AndroidBitmapInfo infoSource,
+                      void* pixelsSource,
+                      AndroidBitmapInfo infoResult,
+                      void* pixelsResult);
     bool takeStep(int step);
     bool correctCount();
     bool transition();
@@ -57,7 +60,7 @@ protected:
 protected:
     static const int STEP1 = 1;
     static const int STEP2 = 2;
-    static const int LIST_LEN = 8;
+    static const int LIST_LEN = 9;
     static const int BACKGROUND_COLOR = 255;
 
     bool bDeleted = true;
