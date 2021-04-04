@@ -61,7 +61,17 @@ protected:
     static const int STEP1 = 1;
     static const int STEP2 = 2;
     static const int LIST_LEN = 9;
-    static const int BACKGROUND_COLOR = 255;
+    static const int ON_COLOR = 255;
+
+    static const int P1 = 0;
+    static const int P2 = 1;
+    static const int P3 = 2;
+    static const int P4 = 3;
+    static const int P5 = 4;
+    static const int P6 = 5;
+    static const int P7 = 6;
+    static const int P8 = 7;
+    static const int P9 = 8;
 
     bool bDeleted = true;
     int listNeighbors[LIST_LEN];

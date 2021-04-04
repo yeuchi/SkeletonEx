@@ -116,16 +116,16 @@ bool GonzalesThinning::thinning(AndroidBitmapInfo infoSource,
                  *  subtract 1 for zeroth order array
                  */
                 // get neighbors
-                listNeighbors[7] = srcline[x-1].green;
-                listNeighbors[3] = srcline[x+1].green;
+                listNeighbors[P8] = srcline[x-1].green;
+                listNeighbors[P4] = srcline[x+1].green;
 
-                listNeighbors[1] = aboveline[x].green;
-                listNeighbors[2] = aboveline[x+1].green;
-                listNeighbors[8] = aboveline[x-1].green;
+                listNeighbors[P2] = aboveline[x].green;
+                listNeighbors[P3] = aboveline[x+1].green;
+                listNeighbors[P9] = aboveline[x-1].green;
 
-                listNeighbors[4] = belowline[x + 1].green;
-                listNeighbors[5] = belowline[x].green;
-                listNeighbors[6] = belowline[x - 1].green;
+                listNeighbors[P5] = belowline[x + 1].green;
+                listNeighbors[P6] = belowline[x].green;
+                listNeighbors[P7] = belowline[x - 1].green;
 
                 if (correctCount()) {
                     if (transition()) {
@@ -182,8 +182,8 @@ bool GonzalesThinning::takeStep(int step) {
  */
 bool GonzalesThinning::correctCount() {
     int total = 0;
-    for (int i = 0; i < LIST_LEN; i++) {
-        if (listNeighbors[i] == BACKGROUND_COLOR)
+    for (int i = 1; i < LIST_LEN; i++) {
+        if (listNeighbors[i] == ON_COLOR)
             total++;
     }
     return (2 <= total && total <= 6) ? true : false;
@@ -205,14 +205,15 @@ bool GonzalesThinning::transition() {
 
 /*
  * pg 492 criterior (c, d) step 1
+ * left to right
  */
 bool GonzalesThinning::step1CD() {
-    if (listNeighbors[3] == 0 ||
-        listNeighbors[5] == 0)
+    if (listNeighbors[P4] != ON_COLOR ||
+        listNeighbors[P6] != ON_COLOR )
         return true;
 
-    else if (listNeighbors[1] == 0 &&
-             listNeighbors[7] == 0)
+    else if (listNeighbors[P2] != ON_COLOR &&
+             listNeighbors[P8] != ON_COLOR)
         return true;
 
     return false;
@@ -220,14 +221,15 @@ bool GonzalesThinning::step1CD() {
 
 /*
  * pg 492 criterior (c, d) step 2
+ * right to left
  */
 bool GonzalesThinning::step2CD() {
-    if (listNeighbors[1] == 0 ||
-        listNeighbors[7] == 0)
+    if (listNeighbors[P2] != ON_COLOR ||
+        listNeighbors[P8] != ON_COLOR)
         return true;
 
-    else if (listNeighbors[3] == 0 &&
-             listNeighbors[5] == 0)
+    else if (listNeighbors[P4] != ON_COLOR &&
+             listNeighbors[P6] != ON_COLOR)
         return true;
 
     return false;
