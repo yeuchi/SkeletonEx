@@ -37,19 +37,20 @@ class MainActivity : AppCompatActivity() {
     /*
      * Gonzales Thinning invoked once
      */
-    fun thinOnce(bmpIn:Bitmap, bmpOut:Bitmap) {
+    fun thinOnce(bmpIn:Bitmap, bmpOut:Bitmap):Int {
         try {
-            imageThinOnceFromJNI(bmpIn, bmpOut)
+            return imageThinOnceFromJNI(bmpIn, bmpOut)
         }
         catch (ex:java.lang.Exception) {
             Toast.makeText(this,
                 ex.toString() as String,
                 Toast.LENGTH_LONG).show()
         }
+        return 0
     }
 
     external fun imageThinOnceFromJNI(bmpIn: Bitmap?,
-                                      bmpOut: Bitmap?)
+                                      bmpOut: Bitmap?):Int
 
     companion object {
         // Used to load the 'native-lib' library on application startup.

@@ -101,7 +101,7 @@ bool releaseBitmaps(JNIEnv *env,
     return releaseBitmap(env, bitmapSource);
 }
 
-void ThinOnce(JNIEnv *env,
+int ThinOnce(JNIEnv *env,
               jobject obj,
               jobject bitmapsource,
               jobject bitmapresult)
@@ -110,16 +110,17 @@ void ThinOnce(JNIEnv *env,
     initializeBitmaps(env, bitmapsource, bitmapresult);
 
     GonzalesThinning thinning;
-    thinning.Apply(infoSource, pixelsSource, infoDestination, pixelsDestination);
+    int count = thinning.Apply(infoSource, pixelsSource, infoDestination, pixelsDestination);
 
     releaseBitmaps(env, bitmapsource, bitmapresult);
     LOGI("unlocking pixels");
+    return count;
 }
 
-extern "C" JNIEXPORT void JNICALL
+extern "C" JNIEXPORT int JNICALL
 Java_com_ctyeung_skeletonex_MainActivity_imageThinOnceFromJNI(JNIEnv * env,
                                  jobject obj,
                                  jobject bmp_in,
                                  jobject bmp_out) {
-    ThinOnce(env, obj, bmp_in, bmp_out);
+    return ThinOnce(env, obj, bmp_in, bmp_out);
 }

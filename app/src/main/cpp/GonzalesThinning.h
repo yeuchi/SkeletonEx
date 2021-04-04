@@ -32,7 +32,7 @@ public:
     ~GonzalesThinning();
 
 public:
-    bool Apply(AndroidBitmapInfo infoSource,
+    int Apply(AndroidBitmapInfo infoSource,
                void* pixelsSource,
                AndroidBitmapInfo infoResult,
                void* pixelsResult);
@@ -43,14 +43,11 @@ public:
                void* pixelsConvolved);
 
 protected:
-    bool thinning(AndroidBitmapInfo infoSource,
+    int thinning(AndroidBitmapInfo infoSource,
                   void* pixelsSource,
                   AndroidBitmapInfo infoResult,
                   void* pixelsResult, int step);
-    void deleteBorder(AndroidBitmapInfo infoSource,
-                      void* pixelsSource,
-                      AndroidBitmapInfo infoResult,
-                      void* pixelsResult);
+
     bool takeStep(int step);
     bool correctCount();
     bool transition();

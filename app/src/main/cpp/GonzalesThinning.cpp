@@ -63,27 +63,22 @@ bool GonzalesThinning::Iterate(AndroidBitmapInfo infoSource,
  * - white pixels (255, 255, 255) as background
  *
  */
-bool GonzalesThinning::Apply(AndroidBitmapInfo infoSource,
+int GonzalesThinning::Apply(AndroidBitmapInfo infoSource,
                              void *pixelsSource,
                              AndroidBitmapInfo infoResult,
                              void *pixelsResult) {
-    bool marked = false;
-    if (thinning(infoSource, pixelsSource, infoResult, pixelsResult, STEP1)) {
-        marked = true;
-    }
-    if (thinning(infoSource, pixelsSource, infoResult, pixelsResult, STEP2)) {
-        marked = true;
-    }
+    int count = thinning(infoSource, pixelsSource, infoResult, pixelsResult, STEP1);
+    count += thinning(infoSource, pixelsSource, infoResult, pixelsResult, STEP2);
 //    if(marked)
 //        deleteBorder(infoSource, pixelsSource, infoResult, pixelsResult);
 
-    return marked;
+    return count;
 }
 
 //////////////////////////////////////////////////////////////////
 // Protected methods
 
-bool GonzalesThinning::thinning(AndroidBitmapInfo infoSource,
+int GonzalesThinning::thinning(AndroidBitmapInfo infoSource,
                                 void *pixelsSource,
                                 AndroidBitmapInfo infoResult,
                                 void *pixelsResult,
@@ -91,8 +86,7 @@ bool GonzalesThinning::thinning(AndroidBitmapInfo infoSource,
     void *currentPixelsSource;
     void *abovePixelsSource;
     void *belowPixelsSource;
-
-    bool bDelete = false;
+    int count = 0;
 
     for (int y = 1; y < infoSource.height - 2; y++) {
         currentPixelsSource = (char *) pixelsSource + (infoSource.stride * y);
@@ -131,10 +125,11 @@ bool GonzalesThinning::thinning(AndroidBitmapInfo infoSource,
                     if (transition()) {
                         if (takeStep(step)) {
                             // white out pixel
-                            destline[x].red = 255;      // red
+                            destline[x].alpha = 0;      // alpha
+                            destline[x].red = 0;      // red
                             destline[x].green = 0;    // green
                             destline[x].blue = 0;     // blue
-                            bDelete = true;
+                            count ++;
                         }
                     }
                 }
@@ -142,19 +137,7 @@ bool GonzalesThinning::thinning(AndroidBitmapInfo infoSource,
         }
         pixelsResult = (char *) pixelsResult + infoResult.stride;
     }
-    return bDelete;
-}
-
-/*
- *  delete border pixels here -- after prior identification
- */
-void GonzalesThinning::deleteBorder(AndroidBitmapInfo infoSource,
-                                    void *pixelsSource,
-                                    AndroidBitmapInfo infoResult,
-                                    void *pixelsResult) {
-    void *currentPixelsSource;
-    bool bDelete = false;
-
+    return count;
 }
 
 bool GonzalesThinning::takeStep(int step) {
@@ -197,7 +180,7 @@ bool GonzalesThinning::correctCount() {
 bool GonzalesThinning::transition() {
     int total = 0;
     for(int i = 1; i<8; i++) {
-        if (listNeighbors[i] == 0)
+        if (listNeighbors[i] != ON_COLOR)
             total ++;
     }
     return (total == 1);
