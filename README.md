@@ -29,3 +29,6 @@ http://www.ctyeung.com/wordpress/?p=479
 
 5. A Thinning Algorithm by Ruye Wang 2011-11-09 \
 http://fourier.eng.hmc.edu/e161/lectures/morphology/node2.html
+
+6. Distance Map by C.T. Yeung\
+https://github.com/yeuchi/imgproc/blob/master/Skeleton/src/com/ctyeung/distanceMap/DistanceMap.as
