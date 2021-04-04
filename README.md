@@ -7,7 +7,10 @@ They related tasks are common for the processing of sign-signature, raster<->vec
 ## Gonzales Thinning
 
 Work-in-progress.  Striving for Thinning algorithm functionality in the near future. \
-<img width="200" src="https://user-images.githubusercontent.com/1282659/103468126-7fe37180-4d1b-11eb-97a3-45037cf5b25e.png"> <img width="200" src="https://user-images.githubusercontent.com/1282659/103468124-7f4adb00-4d1b-11eb-888a-29d434a3bc1e.png"> <img width="200" src="https://user-images.githubusercontent.com/1282659/103468125-7fe37180-4d1b-11eb-893b-7e9d5c611e49.png"> 
+Need to review how I implemented it from previous.  
+Currently not working on the right or bottom boundary.
+<img width="200" src="https://user-images.githubusercontent.com/1282659/103468126-7fe37180-4d1b-11eb-97a3-45037cf5b25e.png"> <img width="200" src="https://user-images.githubusercontent.com/1282659/103468124-7f4adb00-4d1b-11eb-888a-29d434a3bc1e.png"> <img width="200" src="https://user-images.githubusercontent.com/1282659/103468125-7fe37180-4d1b-11eb-893b-7e9d5c611e49.png"> <img width="200" src="https://user-images.githubusercontent.com/1282659/113516643-fcffcc00-9540-11eb-8bb4-7226681a8877.png">
+
 
 # References
 
