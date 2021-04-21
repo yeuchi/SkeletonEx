@@ -1,4 +1,6 @@
 # SkeletonEx
+Work-in-progress ... Nothing cool yet.
+
 
 This is a collection of exercises related to skeleton.\
 They include, thinning algorithm, erosion, diallation, flood-fill, chain-code and others.\
